@@ -49,7 +49,7 @@ const FormPage = () => {
     <div className="min-h-screen bg-dark-background p-6 flex items-center justify-center">
       <div className="w-full max-w-2xl bg-dark-surface rounded-xl border border-dark-border shadow-lg p-8">
         <h1 className="text-3xl font-extrabold text-center text-dark-primary mb-6">
-          🎓 Student Discovery Form
+          🎓 Career Discovery Form
         </h1>
         <form onSubmit={handleSubmit} className="space-y-6">
           {questions.map((q, idx) => {
