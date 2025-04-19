@@ -123,7 +123,8 @@ const FormPage = () => {
           <div className="text-center">
             <button
               type="submit"
-              className="bg-dark-secondary text-dark-background px-6 py-3 rounded-full font-semibold hover:bg-dark-primary transition"
+              className="bg-dark-secondary text-dark-background px-6 py-3 rounded-full font-semibold hover:bg-dark-primary 
+              transition border-2"
             >
               🚀 Submit & Shine
             </button>
