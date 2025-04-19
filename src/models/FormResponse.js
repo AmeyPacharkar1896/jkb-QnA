@@ -1,15 +1,17 @@
 export class FormResponse {
-  constructor({ recommendation, summary, score }) {
-    this.recommendation = recommendation;
-    this.summary = summary;
-    this.score = score;
+  constructor({ success, message, result = null, error = null }) {
+    this.success = success;
+    this.message = message;
+    this.result = result;
+    this.error = error;
   }
 
   static fromJson(json) {
     return new FormResponse({
-      recommendation: json.recommendation || "No recommendation",
-      summary: json.summary || "No summary available",
-      score: json.score || 0
+      success: json.success,
+      message: json.message,
+      result: json.result || null,
+      error: json.error || null
     });
   }
 }
