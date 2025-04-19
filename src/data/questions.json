@@ -1,0 +1,109 @@
+[
+  {
+    "question": "Your Full Name",
+    "answerType": "text"
+  },
+  {
+    "question": "Your Email",
+    "answerType": "email"
+  },
+  {
+    "question": "Contact",
+    "answerType": "tel"
+  },
+  {
+    "question": "Area & City",
+    "answerType": "text"
+  },
+  {
+    "question": "Grade/Standard",
+    "answerType": "multiple_choice",
+    "options": [
+      "10th",
+      "12th"
+    ]
+  },
+  {
+    "question": "Stream / Subjects you're currently studying",
+    "answerType": "text"
+  },
+  {
+    "question": "Subject-wise Marks in Your Last Exam (eg. Subject - Marks)",
+    "answerType": "paragraph"
+  },
+  {
+    "question": "Favourite Subjects (and why)",
+    "answerType": "paragraph"
+  },
+  {
+    "question": "Hobbies/Activities you enjoy outside of school",
+    "answerType": "text"
+  },
+  {
+    "question": "What skills do you believe you're good at?",
+    "answerType": "checkbox",
+    "options": [
+      "Communication",
+      "Problem‑Solving",
+      "Creativity",
+      "Leadership",
+      "Critical Thinking",
+      "Cooking",
+      "Planning & Strategy"
+    ]
+  },
+  {
+    "question": "Which of the following areas excite you the most? (Pick up to 3)",
+    "answerType": "checkbox",
+    "options": [
+      "Science, Engineering & Technology",
+      "Business & Management",
+      "Medicine & Healthcare",
+      "Arts & Design",
+      "Media & Entertainment",
+      "Law & Government",
+      "Social Work & Community Service",
+      "Sports & Fitness",
+      "Data & Analytics",
+      "Yoga & Spirituality"
+    ],
+    "maxChoices": 3
+  },
+  {
+    "question": "What are you most curious about in the world around you?",
+    "answerType": "paragraph"
+  },
+  {
+    "question": "Define any one problem in the world that you are most concerned about which you think you'll fix once given an opportunity.",
+    "answerType": "paragraph"
+  },
+  {
+    "question": "Any specific career paths you're currently considering?",
+    "answerType": "multiple_choice",
+    "options": [
+      "Architectures & Designs",
+      "Engineering fields",
+      "Arts, culture and entertainment field",
+      "Business, management and administration field",
+      "Science and technology field",
+      "Government",
+      "Health and medicine industry",
+      "Law and public policy field"
+    ]
+  },
+  {
+    "question": "What kind of work environment do you see yourself in?",
+    "answerType": "multiple_choice",
+    "options": [
+      "Office",
+      "Outdoors",
+      "Lab",
+      "Creative",
+      "Studio"
+    ]
+  },
+  {
+    "question": "Your long-term goals (if any) or dreams for the future",
+    "answerType": "paragraph"
+  }
+]
