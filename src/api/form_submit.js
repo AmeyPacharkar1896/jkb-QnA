@@ -1,4 +1,4 @@
-import { FormResponse } from "../models/formResponse";
+import { FormResponse } from "../models/formResponse.js";
 
 export async function submitForm(payload) {
   console.log(payload)
