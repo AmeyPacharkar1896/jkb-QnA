@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import questions from '../data/questions.json';
-import { submitForm } from '../api/form_submit.js';
-import toastNotifications from '../toasts/toastNotifications.js';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import questions from "../data/questions.json";
+import { submitForm } from "../api/form_submit.js";
+import toastNotifications from "../toasts/toastNotifications.js";
 
 const FormPage = () => {
   const [answers, setAnswers] = useState({});
@@ -46,38 +46,46 @@ const FormPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-dark-background p-6 flex items-center justify-center">
-      <div className="w-full max-w-2xl bg-dark-surface rounded-xl border border-dark-border shadow-lg p-8">
-        <h1 className="text-3xl font-extrabold text-center text-dark-primary mb-6">
+    <div className="min-h-screen p-6 flex items-center justify-center bg-[#040c11]">
+      <div className="w-full max-w-lg sm:max-w-2xl rounded-xl border border-gray-700 shadow-lg p-8 bg-[#0c171d]">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-center mb-6 text-[#f98b24]">
           🎓 Career Discovery Form
         </h1>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6 text-white">
           {questions.map((q, idx) => {
             const limit = q.question.toLowerCase().includes('up to 3') ? 3 : null;
             return (
-              <div
-                key={idx}
-                className="bg-dark-background rounded-lg border border-dark-border p-4"
-              >
-                <label className="block text-lg font-semibold text-dark-text mb-2">
+              <div key={idx} className="rounded-lg border border-gray-700 p-4 bg-[#0c171d]">
+                <label className="block text-lg sm:text-xl font-semibold mb-2">
                   Q{idx + 1}. {q.question}
                 </label>
-                {['text','email','tel'].includes(q.answerType) && (
+                {['text', 'email'].includes(q.answerType) && (
                   <input
                     type={q.answerType}
                     value={answers[idx] || ''}
                     onChange={e => handleChange(idx, e.target.value)}
-                    className="w-full bg-dark-surface border border-dark-border rounded-md px-4 py-2 text-dark-text placeholder-dark-text focus:outline-none focus:ring-2 focus:ring-dark-secondary"
+                    className="w-full border border-gray-600 bg-transparent rounded-md px-4 py-2 focus:outline-none focus:ring-2 text-white"
                     placeholder="Type your answer..."
                     required
                   />
+                )}
+                {q.answerType  === 'tel' && (
+                  <input
+                  type={q.answerType}
+                  value={answers[idx] || ''}
+                  onChange={e => handleChange(idx, e.target.value)}
+                  onInput={e => e.target.value = e.target.value.replace(/\D/g, '')}
+                  className="w-full border border-gray-600 bg-transparent rounded-md px-4 py-2 focus:outline-none focus:ring-2 text-white"
+                  placeholder="Type your answer..."
+                  required
+                />
                 )}
                 {q.answerType === 'paragraph' && (
                   <textarea
                     rows="3"
                     value={answers[idx] || ''}
                     onChange={e => handleChange(idx, e.target.value)}
-                    className="w-full bg-dark-surface border border-dark-border rounded-md px-4 py-2 text-dark-text placeholder-dark-text focus:outline-none focus:ring-2 focus:ring-dark-secondary"
+                    className="w-full border border-gray-600 bg-transparent rounded-md px-4 py-2 focus:outline-none focus:ring-2 text-white"
                     placeholder="Type your answer..."
                     required
                   />
@@ -85,14 +93,14 @@ const FormPage = () => {
                 {q.answerType === 'multiple_choice' && (
                   <div className="space-y-2">
                     {q.options.map(opt => (
-                      <label key={opt} className="flex items-center space-x-2 text-dark-text">
+                      <label key={opt} className="flex items-center space-x-2">
                         <input
                           type="radio"
                           name={`q${idx}`}
                           value={opt}
                           checked={answers[idx] === opt}
                           onChange={e => handleChange(idx, e.target.value)}
-                          className="text-dark-secondary focus:ring-dark-secondary"
+                          className="focus:ring-2"
                           required
                         />
                         <span>{opt}</span>
@@ -103,13 +111,13 @@ const FormPage = () => {
                 {q.answerType === 'checkbox' && (
                   <div className="space-y-2">
                     {q.options.map(opt => (
-                      <label key={opt} className="flex items-center space-x-2 text-dark-text">
+                      <label key={opt} className="flex items-center space-x-2">
                         <input
                           type="checkbox"
                           value={opt}
                           checked={(answers[idx] || []).includes(opt)}
                           onChange={e => handleCheckbox(idx, opt, e.target.checked, limit)}
-                          className="text-dark-secondary focus:ring-dark-secondary"
+                          className="focus:ring-2"
                         />
                         <span>{opt}</span>
                       </label>
@@ -123,8 +131,7 @@ const FormPage = () => {
           <div className="text-center">
             <button
               type="submit"
-              className="bg-dark-secondary text-dark-background px-6 py-3 rounded-full font-semibold hover:bg-dark-primary 
-              transition border-2"
+              className="px-6 py-3 rounded-full font-semibold text-white hover:brightness-110 transition bg-[#f98b24]"
             >
               🚀 Submit & Shine
             </button>

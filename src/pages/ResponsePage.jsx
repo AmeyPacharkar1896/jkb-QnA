@@ -1,16 +1,13 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 
-// Optional: if you're converting plain links to markdown links
 const convertPlainLinks = (text) => {
   return text.replace(/\[([^\]]+)\]\((.*?)\)/g, (_, label, url) => {
-    // If the label looks like a URL, just return that
     if (label.match(/^(www\.|https?:\/\/)/)) {
       return label.replace(/^https?:\/\//, '');
     }
     return label;
   });
 };
-
 
 export default function ResponsePage() {
   const { state } = useLocation();
@@ -19,13 +16,13 @@ export default function ResponsePage() {
 
   if (!model || !model.success) {
     return (
-      <div className="min-h-screen bg-dark-background flex items-center justify-center p-6">
-        <div className="bg-dark-surface rounded-xl border border-dark-border shadow-lg p-8 text-center max-w-lg">
-          <h2 className="text-2xl font-bold text-red-400">No Response Found</h2>
-          <p className="text-dark-text mt-4">Oops! Looks like something went wrong.</p>
+      <div className="min-h-screen flex items-center justify-center p-6 bg-[#040c11]">
+        <div className="rounded-xl border border-gray-700 shadow-lg p-8 text-center max-w-lg bg-[#0c171d]">
+          <h2 className="text-2xl font-bold text-red-500">No Response Found</h2>
+          <p className="mt-4 text-white">Oops! Looks like something went wrong.</p>
           <button
             onClick={() => navigate('/')}
-            className="mt-6 px-6 py-2 bg-dark-secondary text-dark-background rounded-full hover:bg-dark-primary transition"
+            className="mt-6 px-6 py-2 text-white rounded-full bg-[#f98b24] hover:brightness-110 transition"
           >
             Try Again
           </button>
@@ -41,56 +38,35 @@ export default function ResponsePage() {
     .map(s => s.trim())
     .filter(Boolean);
 
-  const renderList = (lines) => {
-    const isOrdered = /^\d+\.\s+/.test(lines[0]);
+  const renderParagraph = (title, body, color) => (
+    <div key={title}>
+      <h2 className={`text-2xl font-bold ${color} mb-2`}>{title}</h2>
+      <p className="text-white whitespace-pre-wrap">{body}</p>
+    </div>
+  );
+
+  const renderList = (lines, color, isOrdered) => {
     const Tag = isOrdered ? 'ol' : 'ul';
     const className = isOrdered
-      ? 'list-decimal list-inside text-dark-text space-y-1'
-      : 'list-disc list-inside text-dark-text space-y-1';
+      ? 'list-decimal list-inside text-white space-y-1'
+      : 'list-disc list-inside text-white space-y-1';
 
     return (
       <Tag className={className}>
         {lines.map((raw, i) => {
           const text = raw.replace(/^\*\s?/, '').replace(/^\d+\.\s+/, '');
-
-          // Markdown link: [label](url)
-          const mdMatch = text.match(/\[(.*?)\]\((.*?)\)/);
-          if (mdMatch) {
-            const [, label, rawUrl] = mdMatch;
-            const href = rawUrl.startsWith('http') ? rawUrl : `https://${rawUrl}`;
-            return (
-              <li key={i}>
-                <a
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-dark-secondary underline"
-                >
-                  {label}
-                </a>
-              </li>
-            );
-          }
-
           return <li key={i}>{text}</li>;
         })}
       </Tag>
     );
   };
 
-  const renderParagraph = (title, body, color) => (
-    <div key={title}>
-      <h2 className={`text-2xl font-bold ${color} mb-2`}>{title}</h2>
-      <p className="text-dark-text whitespace-pre-wrap">{body}</p>
-    </div>
-  );
-
   const renderSection = (section, idx) => {
     if (section.startsWith('Best Career Option:')) {
       return renderParagraph(
         '🎯 Best Career Option',
         section.replace('Best Career Option:', '').trim(),
-        'text-dark-primary'
+        'text-[#f98b24]'
       );
     }
 
@@ -98,7 +74,7 @@ export default function ResponsePage() {
       return renderParagraph(
         '🔄 Alternate Career Option',
         section.replace('Alternate Career Option:', '').trim(),
-        'text-dark-secondary'
+        'text-[#f98b24]'
       );
     }
 
@@ -107,15 +83,15 @@ export default function ResponsePage() {
       if (lines.length) {
         return (
           <div key={idx}>
-            <h2 className="text-2xl font-bold text-indigo-400 mb-2">📊 Industry Overview</h2>
-            {renderList(lines)}
+            <h2 className="text-2xl font-bold text-[#f98b24] mb-2">📊 Industry Overview</h2>
+            {renderList(lines, 'text-[#f98b24]', true)} {/* Ordered list */}
           </div>
         );
       }
       return renderParagraph(
         '📊 Industry Overview',
         section.replace(/^Industry Overview.*?:/, '').trim(),
-        'text-indigo-400'
+        'text-[#f98b24]'
       );
     }
 
@@ -125,10 +101,10 @@ export default function ResponsePage() {
       const lines = section.split('\n').slice(1).filter(Boolean);
       return (
         <div key={idx}>
-          <h2 className="text-2xl font-bold text-rose-400 mb-2">
+          <h2 className="text-2xl font-bold text-[#f98b24] mb-2">
             🏛️ Top Institutes{label}
           </h2>
-          {renderList(lines)}
+          {renderList(lines, 'text-[#f98b24]', true)} {/* Ordered list */}
         </div>
       );
     }
@@ -139,10 +115,10 @@ export default function ResponsePage() {
       const lines = section.split('\n').slice(1).filter(Boolean);
       return (
         <div key={idx}>
-          <h2 className="text-2xl font-bold text-green-400 mb-2">
+          <h2 className="text-2xl font-bold text-[#f98b24] mb-2">
             🧭 Preparation Plan{label}
           </h2>
-          {renderList(lines)}
+          {renderList(lines, 'text-[#f98b24]', true)} {/* Ordered list */}
         </div>
       );
     }
@@ -151,8 +127,8 @@ export default function ResponsePage() {
       const lines = section.split('\n').slice(1).filter(Boolean);
       return (
         <div key={idx}>
-          <h2 className="text-2xl font-bold text-yellow-400 mb-2">📝 Entrance Tests</h2>
-          {renderList(lines)}
+          <h2 className="text-2xl font-bold text-[#f98b24] mb-2">📝 Entrance Tests</h2>
+          {renderList(lines, 'text-[#f98b24]', true)} {/* Ordered list */}
         </div>
       );
     }
@@ -161,7 +137,7 @@ export default function ResponsePage() {
       return renderParagraph(
         '🎓 Eligibility Criteria',
         section.replace('Eligibility and Admission Criteria:', '').trim(),
-        'text-blue-400'
+        'text-[#f98b24]'
       );
     }
 
@@ -169,7 +145,7 @@ export default function ResponsePage() {
       return renderParagraph(
         '🙋 User‑Centric Advice',
         section.replace(/^User-Centric.*?:/, '').trim(),
-        'text-emerald-400'
+        'text-[#f98b24]'
       );
     }
 
@@ -177,7 +153,7 @@ export default function ResponsePage() {
       return (
         <div key={idx}>
           <h2 className="text-sm font-semibold text-gray-500 mt-4">⚠️ Disclaimer</h2>
-          <p className="text-dark-text text-sm">
+          <p className="text-white text-sm">
             {section.replace('DISCLAIMER:', '').trim()}
           </p>
         </div>
@@ -185,20 +161,20 @@ export default function ResponsePage() {
     }
 
     return (
-      <p key={idx} className="text-dark-text whitespace-pre-wrap">
+      <p key={idx} className="whitespace-pre-wrap text-white">
         {section}
       </p>
     );
   };
 
   return (
-    <div className="min-h-screen bg-dark-background p-6 flex items-center justify-center">
-      <div className="bg-dark-surface rounded-3xl border border-dark-border shadow-lg p-8 w-full max-w-4xl space-y-8 overflow-y-auto">
+    <div className="min-h-screen p-6 flex items-center justify-center bg-[#040c11]">
+      <div className="rounded-3xl border border-gray-700 shadow-lg p-8 w-full max-w-4xl space-y-8 bg-[#0c171d]">
         <div className="text-center">
-          <h1 className="text-4xl font-extrabold text-dark-primary drop-shadow-md">
+          <h1 className="text-4xl font-extrabold mb-2 text-[#f98b24]">
             🎉 Your Personalized Career Report
           </h1>
-          <p className="text-dark-text mt-2">
+          <p className="text-white">
             Based on your responses, here’s our recommendation for your future career journey:
           </p>
         </div>
@@ -208,7 +184,7 @@ export default function ResponsePage() {
         <div className="text-center pt-4">
           <button
             onClick={() => navigate('/')}
-            className="mt-6 px-8 py-3 bg-dark-secondary text-dark-background rounded-full hover:bg-dark-primary transition"
+            className="mt-6 px-8 py-3 text-white rounded-full bg-[#f98b24] hover:brightness-110 transition"
           >
             🔁 Fill Another Form
           </button>
